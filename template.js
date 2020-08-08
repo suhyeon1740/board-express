@@ -17,5 +17,5 @@ exports.htmlTemplate = (title, list, body, control='') => {
 exports.listTemplate = (fileList) => {
     return `<ul>${fileList.map(
         (item) => `<li><a href=/?id=${item}>${item}</a></li>`
-    )}</ul>`
+    ).join('')}</ul>`
 }
