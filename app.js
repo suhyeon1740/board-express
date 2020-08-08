@@ -28,7 +28,8 @@ app.get("/", (req, res) => {
                     title,
                     list,
                     `<h2>${title}</h2><div>${contents}</div>`,
-                    `<a href="/update?id=${title}">update</a>`
+                    `<a href="/update?id=${title}">update</a>
+                     <a href="/delete?id=${title}">delete</a>`
                 )
                 res.send(html)
             })
@@ -77,9 +78,15 @@ app.get("/update", (req, res) => {
     })
 })
 
-app.get('/update_file', (req, res) => {
+app.get("/update_file", (req, res) => {
     fs.writeFile(`./data/${req.query.title}`, req.query.contents, () => {
         res.redirect(`/?id=${req.query.title}`)
+    })
+})
+
+app.get("/delete", (req, res) => {
+    fs.unlink(`data/${req.query.id}`, function (error) {        
+        res.redirect(`/`)
     })
 })
 
