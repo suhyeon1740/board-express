@@ -1,10 +1,12 @@
 const express = require("express")
 const fs = require("fs")
 const template = require("./template.js")
+const compression = require("compression")
 const app = express()
 const port = 3000
 
 app.use(express.urlencoded({ extended: false }))
+app.use(compression()) //gzip 방식으로 압축
 
 app.get("/", (req, res) => {
     if (!req.query.id) {
@@ -52,13 +54,6 @@ app.get("/create", (req, res) => {
             </form>`
         )
         res.send(html)
-    })
-})
-
-app.get("/create_file", (req, res) => {
-    fs.writeFile(`./data/${req.query.title}`, req.query.contents, () => {
-        // res.send('success')
-        res.redirect(`/?id=${req.query.title}`)
     })
 })
 
