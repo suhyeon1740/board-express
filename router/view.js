@@ -22,4 +22,8 @@ router.get("/", (req, res, next) => {
     })
 })
 
+router.use((err, req, res, next) => {
+    res.status(500).send("no such file or directory")
+})
+
 module.exports = router
