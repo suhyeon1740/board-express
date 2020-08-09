@@ -4,6 +4,8 @@ const template = require("./template.js")
 const app = express()
 const port = 3000
 
+app.use(express.urlencoded({ extended: false }))
+
 app.get("/", (req, res) => {
     if (!req.query.id) {
         fs.readdir("./data", (error, fileList) => {
@@ -43,7 +45,7 @@ app.get("/create", (req, res) => {
         const html = template.htmlTemplate(
             "create",
             list,
-            `<form action="/create_file">
+            `<form action="/create_file" method="post">
                 <div><input type="text" placeholder="title" name="title" /></div>
                 <div><textarea placeholder="contents" name="contents"></textarea></div>
                 <input type="submit" />
@@ -55,7 +57,14 @@ app.get("/create", (req, res) => {
 
 app.get("/create_file", (req, res) => {
     fs.writeFile(`./data/${req.query.title}`, req.query.contents, () => {
+        // res.send('success')
         res.redirect(`/?id=${req.query.title}`)
+    })
+})
+
+app.post("/create_file", (req, res) => {
+    fs.writeFile(`./data/${req.body.title}`, req.body.contents, () => {
+        res.redirect(`/?id=${req.body.title}`)
     })
 })
 
@@ -93,3 +102,4 @@ app.get("/delete", (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
+
