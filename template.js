@@ -16,6 +16,6 @@ exports.htmlTemplate = (title, list, body, control='') => {
 
 exports.listTemplate = (fileList) => {
     return `<ul>${fileList.map(
-        ({title}) => `<li><a href=/view?id=${title}>${title}</a></li>`
+        ({number, title}) => `<li><a href=/view?number=${number}>${title}</a></li>`
     ).join('')}</ul>`
 }

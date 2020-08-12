@@ -22,8 +22,9 @@ router.post("/file", (req, res) => {
     connection.query(
         `INSERT INTO posts(title, contents) VALUES('${req.body.title}', '${req.body.contents}')`,
         (err, rows) => {
+            console.log(rows)
             if (err) throw err
-            res.redirect(`/view?id=${req.body.title}`)
+            res.redirect(`/view?number=${rows.insertId}`)
         }
     )
 })
