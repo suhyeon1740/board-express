@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 })
 
 router.post("/file", (req, res) => {
-    connection.query(`UPDATE posts SET contents = '${req.body.contents}'`, (err) => {
+    connection.query(`UPDATE posts SET contents = '${req.body.contents}' WHERE title='${req.body.title}'`, (err) => {
         if (err) throw err
         res.redirect(`/view?id=${req.body.title}`)
     })
