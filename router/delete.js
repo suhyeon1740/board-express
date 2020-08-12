@@ -4,7 +4,7 @@ const router = express.Router()
 const connection = require("../db")
 
 router.get("/", (req, res) => {
-    connection.query(`DELETE FROM posts WHERE titles = '${req.query.id}'`, (err) => {
+    connection.query(`DELETE FROM posts WHERE title = '${req.query.id}'`, (err) => {
         if (err) throw err
         res.redirect(`/`)
     })
