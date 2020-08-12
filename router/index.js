@@ -6,11 +6,13 @@ const viewRouter = require("./view")
 const createRouter = require("./create")
 const updateRouter = require("./update")
 const deleteRouter = require("./delete")
+const connection = require("../db")
 
 router.get("*", (req, res, next) => {
-    // 모든 get방식 요청에서만 글 목록 가져옴
-    fs.readdir("./data", (error, list) => {
-        req.list = list
+    // 모든 get방식 요청에서만 글 목록 가져옴    
+    connection.query("SELECT title FROM posts", (err, rows) => {
+        if (err) throw err
+        req.list = rows
         next()
     })
 })

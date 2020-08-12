@@ -2,15 +2,16 @@ const express = require("express")
 const fs = require("fs")
 const template = require("../template.js")
 const router = express.Router()
+const connection = require("../db")
 
 router.get("/", (req, res, next) => {
-    fs.readFile(`./data/${req.query.id}`, "utf8", (err, data) => {
+    connection.query(`SELECT * FROM posts WHERE title = '${req.query.id}'`, (err, rows) => {
         if (err) {
             next(err) // error 미들웨어 호출
         }
-        const title = req.query.id
-        const contents = data
         const list = template.listTemplate(req.list)
+        const title = rows[0].title
+        const contents = rows[0].contents
         const html = template.htmlTemplate(
             title,
             list,

@@ -2,6 +2,7 @@ const express = require("express")
 const fs = require("fs")
 const template = require("../template.js")
 const router = express.Router()
+const connection = require("../db")
 
 router.get("/", (req, res) => {
     const list = template.listTemplate(req.list)
@@ -18,9 +19,13 @@ router.get("/", (req, res) => {
 })
 
 router.post("/file", (req, res) => {
-    fs.writeFile(`./data/${req.body.title}`, req.body.contents, () => {
-        res.redirect(`/view?id=${req.body.title}`)
-    })
+    connection.query(
+        `INSERT INTO posts(title, contents) VALUES('${req.body.title}', '${req.body.contents}')`,
+        (err, rows) => {
+            if (err) throw err
+            res.redirect(`/view?id=${req.body.title}`)
+        }
+    )
 })
 
 module.exports = router
