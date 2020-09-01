@@ -1,5 +1,4 @@
 const express = require("express")
-const fs = require("fs")
 const router = express.Router()
 const template = require("../template.js")
 const viewRouter = require("./view")
